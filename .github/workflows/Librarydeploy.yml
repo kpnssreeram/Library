@@ -73,6 +73,15 @@ jobs:
           fi
         shell: bash
 
+    # - name: configure aws credentials
+        #   uses: aws-actions/configure-aws-credentials@v4
+        #   with:
+        #     role-to-assume: arn:aws:iam::${{env.AWSCRED}}:role/emojigitrole
+        #     role-session-name: emojiSession
+        #     aws-region: ${{ env.AWS_REGION }}
+
+
+  
       - name: Deploy Secrets
         run: |
           cd ops/cfn
