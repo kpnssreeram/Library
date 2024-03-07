@@ -73,10 +73,10 @@ jobs:
       #     fi
       #   shell: bash
 
-      - name: configure aws credentials
-        uses: aws-actions/configure-aws-credentials@v4
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: arn:aws:iam::${{env.AWS_ENVIRONMENT_${{inputs.aws_environment}}}}:role/emojigitrole
+          role-to-assume: arn:aws:iam::${{ env[format('AWS_ENVIRONMENT_{0}', inputs.aws_environment)] }}:role/emojigitrole
           role-session-name: emojiSession
           aws-region: ${{ env.AWS_REGION }}
 
