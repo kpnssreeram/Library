@@ -58,27 +58,27 @@ jobs:
           echo ::add-mask::$Access_Token
           echo "Access_Token=$Access_Token" >> $GITHUB_ENV
 
-      - name: Setup Environment Variables
-        run: |
-          if [ "${{ inputs.aws_environment }}" == "qa" ]; then
-            echo "AWSCRED=${{ secrets.AWS_ENVIRONMENT_QA }}" >> $GITHUB_ENV
-          else
-            echo "AWSCRED=${{ secrets.AWS_ENVIRONMENT_PROD }}" >> $GITHUB_ENV
-          fi
+      # - name: Setup Environment Variables
+      #   run: |
+      #     if [ "${{ inputs.aws_environment }}" == "qa" ]; then
+      #       echo "AWSCRED=${{ secrets.AWS_ENVIRONMENT_QA }}" >> $GITHUB_ENV
+      #     else
+      #       echo "AWSCRED=${{ secrets.AWS_ENVIRONMENT_PROD }}" >> $GITHUB_ENV
+      #     fi
 
-          if [ "${{ inputs.Universe }}" == "ci" ]; then
-            echo "STACK_NAME=${{ secrets.STACK_NAME_CI }}" >> $GITHUB_ENV
-          else
-            echo "STACK_NAME=${{ secrets.STACK_NAME_QA }}" >> $GITHUB_ENV
-          fi
-        shell: bash
+      #     if [ "${{ inputs.Universe }}" == "ci" ]; then
+      #       echo "STACK_NAME=${{ secrets.STACK_NAME_CI }}" >> $GITHUB_ENV
+      #     else
+      #       echo "STACK_NAME=${{ secrets.STACK_NAME_QA }}" >> $GITHUB_ENV
+      #     fi
+      #   shell: bash
 
-    # - name: configure aws credentials
-        #   uses: aws-actions/configure-aws-credentials@v4
-        #   with:
-        #     role-to-assume: arn:aws:iam::${{env.AWSCRED}}:role/emojigitrole
-        #     role-session-name: emojiSession
-        #     aws-region: ${{ env.AWS_REGION }}
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::${{env.AWS_ENVIRONMENT_${{inputs.aws_environment}}}}:role/emojigitrole
+          role-session-name: emojiSession
+          aws-region: ${{ env.AWS_REGION }}
 
 
   
